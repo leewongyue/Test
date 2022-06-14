@@ -24,11 +24,11 @@ void insert_last(LIST *list,void *data)
         return;
     }
     temp = list->head;
-    while(temp->data != NULL)
+    while(temp != NULL)
     {
-        temp = temp->data;
+        temp = temp->next;
     }
-    temp->data = newNode;
+    temp = newNode;
     list->count++;
 }
 

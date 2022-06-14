@@ -5,14 +5,13 @@
 
 int main()
 {
-    LIST *list;
-    list = init_list(list);
+    LIST *list =init_list(list);
     int cnt=0;
     while (cnt != 20)
     {
         BUFFER *buff;
         buff = malloc(sizeof(BUFFER));
-        buff->buffer = (char)cnt;
+        buff->buffer = "asjskf";
         buff->count = 0;
         buff->offset = 0;
         insert_last(list,buff);
@@ -24,7 +23,7 @@ int main()
         NODE *ptr = list->head;
         while (ptr != NULL)
         {
-            printf("%p \n",ptr->data);
+            printf("%p %d\n",ptr->data,cnt);
             ptr = ptr->next;
             cnt++;
         }

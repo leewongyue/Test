@@ -1,1 +1,3 @@
 testcase.c
+*.o
+*.exe

@@ -30,11 +30,11 @@ char* slice_buffer(char* bytes,int startindex,int endindex)
 int trywritebytes(char* source,char* dest,int destoffset)
 {
     if(source==NULL)
-        return -1;
+        return 0;
     if(dest==NULL)
-        return -1;
+        return 0;
     if(destoffset<0)
-        return -1;
+        return 0;
 
     int count=0;
     int destcount = destoffset;

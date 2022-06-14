@@ -1,27 +1,32 @@
 #include <stdio.h>
 
-#include "datastructure/queue.h"
+#include "datastructure/linkedlist.h"
 #include "buffer/buffer.h"
 
 int main()
 {
-    QUEUE *queue = init_queue(queue);
+    LIST *list;
+    list = init_list(list);
     int cnt=0;
     while (cnt != 20)
     {
         BUFFER *buff;
         buff = malloc(sizeof(BUFFER));
-        buff->buffer = "buffer";
+        buff->buffer = (char)cnt;
         buff->count = 0;
         buff->offset = 0;
-        enqueue(queue,buff);
+        insert_last(list,buff);
         cnt++;
     }
     cnt = 0;
     while (cnt != 20)
     {
-       BUFFER *buff = (BUFFER*)dequeue(queue);
-       printf("%s \n",buff->buffer);
-       cnt++;
+        NODE *ptr = list->head;
+        while (ptr != NULL)
+        {
+            printf("%p \n",ptr->data);
+            ptr = ptr->next;
+            cnt++;
+        }
     }
 }

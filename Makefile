@@ -1,23 +1,26 @@
 CC = gcc
 TARGET = main
-CFLAGS = -Wall -Wextra -o $(TARGET)
+CFLAGS = -Wall -Wextra -g -O -o $(TARGET)
 OBJFLAG = -Wall -Wextra -c
-OBJS = main.o queue.o buffer.o
+OBJS = main.o queue.o buffer.o linkedlist.o
 
 
 #HEADERS
-HEADERS = datastructure\queue.h buffer\buffer.h
+HEADERS = datastructure\queue.h  datastructure\linkedlist.h
 #BUFFER 
 BUFFER = buffer\buffer.h buffer\buffer.c
 #DATASTRUCTURE
-DATASTRUCTURE = datastructure\queue.h datastructure\queue.c
+QUEUE = datastructure\queue.h datastructure\queue.c 
+LINKEDLIST = datastructure\linkedlist.h datastructure\linkedlist.c
 #MAIN
 
 buffer.o : $(BUFFER)
 		$(CC) $(OBJFLAG) buffer\buffer.c
-queue.o : $(DATASTRUCTURE)
-		$(CC) $(OBJFLAG) -c datastructure\queue.c
+queue.o : $(QUEUE)
+		$(CC) $(OBJFLAG) datastructure\queue.c
+linkedlist.o : $(LINKEDLIST)
+		$(CC) $(OBJFLAG) datastructure\linkedlist.c
 main.o : $(HEADERS) main.c
-		$(CC) $(OBJFLAG) -c main.c
+		$(CC) $(OBJFLAG) main.c
 main : $(OBJS)
 		$(CC) $(CFLAGS) $(OBJS)

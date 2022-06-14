@@ -39,7 +39,6 @@ void* dequeue(QUEUE *queue)
     NODE *ptr;
     if(is_empty(queue))
     {
-        printf("empty queue");
         return NULL;
     }
     ptr = queue->front;

@@ -15,7 +15,7 @@ LINKEDLIST = datastructure\linkedlist.h datastructure\linkedlist.c
 #MAIN
 
 buffer.o : $(BUFFER)
-		$(CC) $(OBJFLAG) buffer\buffer.c
+		$(CC) $(OBJFLAG) -I"C:\Users\leewo\Downloads\Test\Test\buffer" buffer\buffer.c
 queue.o : $(QUEUE)
 		$(CC) $(OBJFLAG) datastructure\queue.c
 linkedlist.o : $(LINKEDLIST)

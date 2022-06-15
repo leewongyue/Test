@@ -7,7 +7,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
-#include "buffer.h"
+#include "../buffer/buffer.h"
 
 #define peek_data(type) \
 void *peek_##type(NODE *node) \

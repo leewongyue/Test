@@ -1,31 +1,34 @@
-#include <stdio.h>
-
 #include "datastructure/linkedlist.h"
-#include "buffer/buffer.h"
 
 int main()
 {
-    LIST *list =init_list(list);
+  LIST *list = malloc(sizeof (LIST));
+    list = init_list(list);
     int cnt=0;
     while (cnt != 20)
     {
         BUFFER *buff;
         buff = malloc(sizeof(BUFFER));
-        buff->buffer = "asjskf";
-        buff->count = 0;
+        buff->buffer = malloc(sizeof (char)*6);
+        buff->buffer = "abcde\0";
+        buff->count = cnt;
         buff->offset = 0;
-        insert_last(list,buff);
+        add(list,buff);
         cnt++;
     }
-    cnt = 0;
-    while (cnt != 20)
-    {
-        NODE *ptr = list->head;
-        while (ptr != NULL)
-        {
-            printf("%p %d\n",ptr->data,cnt);
-            ptr = ptr->next;
-            cnt++;
-        }
-    }
+    BUFFER  *buffer1;
+    buffer1 = malloc(sizeof(BUFFER));
+    buffer1->buffer = malloc(sizeof (char)*6);
+    buffer1->buffer = "a\0";
+    buffer1->count = cnt;
+    buffer1->offset = 0;
+    add(list, buffer1);
+
+    print_node(list);
+    char *arr = "a\0";
+    remove_node(list,find_string(list,arr));
+    print_node(list);
+    delete_index(list ,4);
+    print_node(list);
+    destroy_list(list);
 }

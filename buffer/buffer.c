@@ -61,3 +61,18 @@ void cpy_buffer(char* source,int s_start,int s_end,char* dest,int d_start)
         sourcecnt++;
     } while (sourcecnt!=s_end);
 }
+int buffer_cmp(char* s1,char* s2)
+{
+    int cnt;
+
+    cnt = 0;
+    while (s1[cnt] != '\0' || s2[cnt] != '\0')
+    {
+        if(s1[cnt] != s2[cnt])
+        {
+            return 0;
+        }
+        cnt++;
+    }
+    return 1;
+}

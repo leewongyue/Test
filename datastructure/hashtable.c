@@ -16,7 +16,7 @@ HASHTABLE *init_hashtable(HASHTABLE *bucket){
     return bucket;
 }
 
-void h_add(HASHTABLE *table,uint32_t *key,void *value)
+void h_add(HASHTABLE *table,uint32_t key,void *value)
 {
     uint32_t hashIndex = uint_hash(key);
 

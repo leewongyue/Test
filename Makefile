@@ -19,7 +19,7 @@ SHA256 = SHA256/KISA_SHA256.h SHA256/KISA_SHA256.c
 #HASHMAP
 HASHMAP = datastructure/hashtable.h datastructure/hashtable.c
 
-hashmap.o: $(HASHMAP)
+hashtable.o: $(HASHMAP)
 		$(CC) $(OBJFLAG) datastructure/hashtable.c
 KISA_SHA256.o: $(SHA256)
 		$(CC) $(OBJFLAG) SHA256/KISA_SHA256.c

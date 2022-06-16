@@ -1,6 +1,6 @@
 
 #include <string.h>
-#include "datastructure/hashmap.h"
+#include "datastructure/hashtable.h"
 
 int main___()
 {

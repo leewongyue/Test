@@ -1,5 +1,5 @@
 
-#include "hashmap.h"
+#include "hashtable.h"
 h_NODE *init_h_node(h_NODE *node)
 {
     node = malloc(sizeof(h_NODE));
@@ -50,12 +50,13 @@ void delete_key(HASHTABLE *table,uint32_t key)
     {
       if (node == table[index].head)
       {
+        //데이터 존재할 경우 메모리 해제
         free(node);
         return;
       }
     }else
     {
-
+        //데이터 없을 경우
     }
 }
 

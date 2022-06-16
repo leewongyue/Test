@@ -1,33 +1,28 @@
 #ifndef HASHMAP_H
     #define HASHMAP_H
 #endif
-#include <stdint.h>
+
 #include <stdlib.h>
+#include <stdio.h>
 
-#include "../SHA256/KISA_SHA256.h"
-
-typedef unsigned char BYTE;
-typedef unsigned int UINT;
-
-struct BUCKET* hashtable = NULL;
+#define MAX_BUCKET UINT32_MAX
 
 typedef struct h_NODE
 {
     struct h_NODE *next;
-    struct h_NODE *prev;
-    BYTE *key;
-    BYTE *value;
+    uint32_t *key;
+    void *value;
 }h_NODE;
-typedef struct BUCKET
+typedef struct HASHTABLE
 {
     struct h_NODE *head;
-    struct h_NODE *tail;
-    BYTE *hash;
     int count;
-}BUCKET;
+}HASHTABLE;
 
-h_NODE *init_h_node(h_NODE *node);
-void h_add(BUCKET *bucket,BYTE *key,char *data);
-
-
-
+h_NODE   *init_h_node(h_NODE *node);
+HASHTABLE   *init_hashtable(HASHTABLE *bucket);
+void     h_add(HASHTABLE *bucket,uint32_t *key,void *value);
+uint32_t uint_hash(uint32_t x);
+void     delete_key(HASHTABLE *table,uint32_t key);
+void     search(HASHTABLE *table,uint32_t key);
+void     print_map(HASHTABLE *table);

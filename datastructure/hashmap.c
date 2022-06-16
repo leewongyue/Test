@@ -1,6 +1,5 @@
 
 #include "hashmap.h"
-#include "string.h"
 h_NODE *init_h_node(h_NODE *node)
 {
     node = malloc(sizeof(h_NODE));
@@ -9,23 +8,79 @@ h_NODE *init_h_node(h_NODE *node)
     node->next = 0;
     return node;
 }
-void h_add(BUCKET *table,BYTE *key,char *value)
+
+HASHTABLE *init_hashtable(HASHTABLE *bucket){
+    bucket = malloc(MAX_BUCKET*sizeof(HASHTABLE));
+    bucket->count = 0;
+    bucket->head = 0;
+    return bucket;
+}
+
+void h_add(HASHTABLE *table,uint32_t *key,void *value)
 {
-    UINT keylen = strlen(key);
-    BYTE hash[30];
-    SHA256_Encrpyt(key,keylen,hash);
+    uint32_t hashIndex = uint_hash(key);
+
     h_NODE *newNode = init_h_node(newNode);
     newNode->value = value;
-    newNode->key = hash;
+    newNode->key = key;
 
-    newNode->prev = table->tail->prev;
-    newNode->next = table->tail;
-    table->tail->prev->next = newNode;
-    table->tail->prev = newNode;
-    table->count++;
+    if(table[hashIndex].count == 0)
+    {
+        table[hashIndex].count = 1;
+        table->count++;
+        table[hashIndex].head = newNode;
+    }
+    //else
+    //{
+    //    newNode->next = table[hashIndex].head;
+    //    table[hashIndex].head = newNode;
+    //    table[hashIndex].count++;
+    //    table->count++;
+    //}
 
 }
 
-uint32_t hashcode(const char *str);
-uint64_t hashcode_64(const char *str);
+void delete_key(HASHTABLE *table,uint32_t key)
+{
+    uint32_t index = uint_hash(key);
+    h_NODE *node;
 
+    node = table[index].head;
+   if (node->key == key)
+    {
+      if (node == table[index].head)
+      {
+        free(node);
+        return;
+      }
+    }else
+    {
+
+    }
+}
+
+uint32_t uint_hash(uint32_t a)
+{
+    a = (a+0x7ed55d16) + (a<<12);
+    a = (a^0xc761c23c) ^ (a>>19);
+    a = (a+0x165667b1) + (a<<5);
+    a = (a+0xd3a2646c) ^ (a<<9);
+    a = (a+0xfd7046c5) + (a<<3);
+    a = (a^0xb55a4f09) ^ (a>>16);
+    return a;
+}
+
+void *search_key(HASHTABLE *table,uint32_t key){
+    uint32_t index = uint_hash(key);
+    h_NODE* node = table[index].head;
+    if (node->key == key)
+    {
+        //데이터 존재할 경우
+      printf("\n key : [ %u ], value : [ %s ]\n", node->key, (char*)node->value);
+      return node->value;
+    }
+    else
+    {
+        //데이터 없을 경우
+    }
+}

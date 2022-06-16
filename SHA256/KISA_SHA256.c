@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-const UINT SHA256_K[64] = 
+const UINT SHA256_K[64] =
 {
 	0x428a2f98, 0x71374491, 0xb5c0fbcf, 0xe9b5dba5, 0x3956c25b, 0x59f111f1,
 	0x923f82a4, 0xab1c5ed5, 0xd807aa98, 0x12835b01, 0x243185be, 0x550c7dc3,
@@ -54,13 +54,13 @@ const UINT SHA256_K[64] =
 #define RHO0(x)			(RR(x,  7) ^ RR(x, 18) ^ SS(x,  3))
 #define RHO1(x)			(RR(x, 17) ^ RR(x, 19) ^ SS(x, 10))
 
-		
+
 //*********************************************************************************************************************************
 // o SHA256_Transform()	: 512 비트 단위 블록의 메시지를 입력 받아 연쇄변수를 갱신하는 압축 함수로써
 //						  4 라운드(64 단계)로 구성되며 8개의 연쇄변수(a, b, c, d, e, f, g, h)를 사용
 // o 입력				: Message		- 입력 메시지의 포인터 변수
 //						  ChainVar		- 연쇄변수의 포인터 변수
-// o 출력				: 
+// o 출력				:
 //*********************************************************************************************************************************
 void SHA256_Transform(ULONG_PTR Message, ULONG_PTR ChainVar)
 {
@@ -119,7 +119,7 @@ void SHA256_Transform(ULONG_PTR Message, ULONG_PTR ChainVar)
 //*********************************************************************************************************************************
 // o SHA256_Init()		: 연쇄변수와 길이변수를 초기화하는 함수
 // o 입력				: Info		-  SHA-256 구조체의 포인터 변수
-// o 출력				: 
+// o 출력				:
 //*********************************************************************************************************************************
 void SHA256_Init( OUT SHA256_INFO *Info )
 {
@@ -140,7 +140,7 @@ void SHA256_Init( OUT SHA256_INFO *Info )
 // o 입력				: Info		 - SHA-256 구조체의 포인터 변수
 //						  pszMessage - 입력 메시지의 포인터 변수
 //						  uDataLen	 - 입력 메시지의 바이트 길이
-// o 출력				: 
+// o 출력				:
 //*********************************************************************************************************************************
 void SHA256_Process( OUT SHA256_INFO *Info, IN const BYTE *pszMessage, IN UINT uDataLen )
 {
@@ -154,6 +154,7 @@ void SHA256_Process( OUT SHA256_INFO *Info, IN const BYTE *pszMessage, IN UINT u
 
 	while ((uDataLen + remain_buffer) >= SHA256_DIGEST_BLOCKLEN)
 	{
+		//SALT 값
 		memcpy((UCHAR_PTR)(Info->szBuffer + remain_buffer), pszMessage, (SINT)SHA256_DIGEST_BLOCKLEN);
 		SHA256_Transform((ULONG_PTR)Info->szBuffer, Info->uChainVar);
 		pszMessage += (SHA256_DIGEST_BLOCKLEN - remain_buffer);

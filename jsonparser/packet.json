@@ -1,0 +1,45 @@
+{
+    "Packet":
+
+    [
+      {
+        "Chat":
+        [
+          {
+            "Chat":
+            [
+              {
+                "String": "chat",
+                "int": "userId"
+              }
+            ]
+          }
+        ],
+        "Table":
+        [
+          {
+            "TableMove": [
+              {
+                "TableInfo": "tableInfo",
+                "short": "direction",
+                "int": "OperatingTime",
+                "int": "distance"
+              }
+            ],
+            "TableLightSwitch": [
+              {
+                "TableInfo": "tableInfo",
+                "final short": "switch"
+              }
+            ],
+            "TableInfo": [
+              {
+                "int": "Pos",
+                "short":"LightState"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }

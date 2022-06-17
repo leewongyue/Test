@@ -1,0 +1,4 @@
+testcase.c
+*.o
+*.exe
+Makefile

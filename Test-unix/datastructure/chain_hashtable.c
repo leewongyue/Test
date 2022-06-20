@@ -57,8 +57,6 @@ void c_delete_key(C_HASHTABLE *table,uint32_t key)
         {
             
         }
-        
-
         //데이터 존재할 경우 메모리 해제
         printf("DEBUG : DELETE_DATA :              %p\n",table[index].head->value);
         node->key = NULL;

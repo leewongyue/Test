@@ -1,22 +1,18 @@
-#include "packetgenerator/jsonparser.h"
-
+#include <stdio.h>
+#include "atomic_datastructure/atomic_queue.h"
 int main()
 {
-  char arr[BUFFERSIZE];
-  file_read("/Users/leewongyu/Desktop/Test/packet.json",arr);
-  printf("%s\n",arr);
+  QUEUE *queue;
+  queue = init_queue(queue);
 
-  int len = strlen(arr);
-  int cnt = 0;
-  len -=5;
-
-  JSON_BUFF* json =  del_ws(arr,len);
-  //while (json->buffer[cnt] !='\0')
-  //{
-  //  write(1,&json->buffer[cnt],1);
-  //  cnt++;
-  //}
-  json_parser(json->buffer,json->len);
-
+  for(int i=0; i<10;i++){
+    char*arr = malloc(sizeof(char)*5);
+    arr = "asdf\0";
+    enqueue(queue,(void*)arr);
+  }
+  printf("QUEUE SIZE : %d\n",queue->count);
+  for(int i=0;i<10;i++){
+    printf("%s\n",(char*)dequeue(queue));
+  }
 
 }

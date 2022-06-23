@@ -7,7 +7,7 @@ atomic_int p1;
 int p2;
 int cnt_thread = 0;
 int id = 1;
-dwThreadID[10];
+int dwThreadID[10];
 int result = 0;
 int total = 0;
 struct threadData{

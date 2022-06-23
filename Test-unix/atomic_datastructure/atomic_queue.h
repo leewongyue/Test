@@ -6,21 +6,21 @@
 #include <stdbool.h>
 #include <stdlib.h>
 
-typedef struct NODE
+typedef struct atomic_NODE
 {
     void *data;
-    struct NODE *volatile next;
-}NODE;
+    struct atomic_NODE *volatile next;
+}atomic_NODE;
 
-typedef struct QUEUE
+typedef struct atomic_QUEUE
 {
-    struct NODE * volatile front;
-    struct NODE * volatile rear;
-    int count;
-}QUEUE;
+    struct atomic_NODE *volatile front;
+    struct atomic_NODE *volatile rear;
+    atomic_int count;
+}atomic_QUEUE;
 
 
-void enqueue(QUEUE *queue,void *data);
-QUEUE *init_queue(QUEUE *queue);
-void* dequeue(QUEUE *queue);
-bool CAS(NODE *addr,NODE *old_node, NODE *new_node);
+void at_enqueue(atomic_QUEUE *queue,void *data);
+atomic_QUEUE *at_init_queue(atomic_QUEUE *queue);
+void* at_dequeue(atomic_QUEUE *queue);
+bool at_CAS(atomic_NODE *addr,atomic_NODE *old_node, atomic_NODE *new_node);

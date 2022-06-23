@@ -2,14 +2,14 @@
 #include <windows.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include "atomic_queue.h"
+#include "atomic_datastructure/atomic_queue.h"
 
 int cnt_thread = 0;
 int id = 1;
 dwThreadID[10];
 int result = 0;
 int total = 0;
-QUEUE *queue;
+atomic_QUEUE *queue;
 struct threadData{
     int tid;
     char *message;

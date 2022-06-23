@@ -1,86 +1,118 @@
 #include "atomic_queue.h"
 
-QUEUE *init_queue(QUEUE *queue)
+
+atomic_QUEUE *at_init_queue(atomic_QUEUE *queue)
 {
-    queue = malloc(sizeof(QUEUE));
-    queue->front = queue->rear = malloc(sizeof(NODE));
+    queue = malloc(sizeof(atomic_QUEUE)*10);
+    queue->front = queue->rear = malloc(sizeof(atomic_NODE));
     queue->rear->next = NULL;
     queue->count = 0;
     return queue;
 }
 
-void enqueue(QUEUE *queue,void *data)
+/*
+ *  atomic_NODE *ptr = queue->rear;
+        if(queue->count == 0)
+        {
+            at_CAS(&queue->front,ptr,newNode);
+            at_CAS(&queue->rear,ptr,newNode);
+            queue->count++;
+//            atomic_compare_exchange_strong(&queue->count,queue->count,queue->count++);
+            return ;
+        }
+        else
+        {
+            at_CAS(&queue->rear->next,NULL,newNode);
+            at_CAS(&queue->rear,ptr,newNode);
+            queue->count++;
+            return ;
+        }
+
+ *
+ */
+void at_enqueue(atomic_QUEUE *queue,void *data)
 {
-    NODE* newNode = (NODE*)malloc(sizeof (NODE));
+    atomic_NODE* newNode = (atomic_NODE*)malloc(sizeof (atomic_NODE));
     newNode->data = data;
     newNode->next = NULL;
     while(1)
     {
-      NODE *last = queue->rear;
-      NODE *next = last->next;
-
-      if(last != queue->rear)
-      {
-        continue;
-      }
-      if(next == NULL)
-      {
-        if(CAS(&(last->next),NULL,newNode))
-        {
-            CAS(&queue->rear,last,newNode);
-            queue->count++;
-            return ;
-        }
-      }
-      else
-      {
-        CAS(&queue->rear,last,next);
-      }
-
-    }
-    
-}
-
-void* dequeue(QUEUE *queue)
-{
-    void* data;
-    
-    while (1)
-    {
-        NODE *ptr = queue->front;
-        NODE *next = queue->front->next;
-        NODE *last = queue->rear;
-        NODE *lastnext = last->next;
-        if(ptr != queue->front)
+        atomic_NODE *last = queue->rear;
+        atomic_NODE *next = last->next;
+        if(last != queue->rear)
             continue;
-        if(last == ptr)
+        if(next == NULL)
         {
-            if(lastnext == NULL)
+            if(at_CAS(&(last->next),NULL,newNode))
             {
-                return -1;
+                at_CAS(&queue->rear,last,newNode);
+                queue->count++;
+                return;
+            }
+        }
+        else
+            at_CAS(&queue->rear,last,next);
+    }
+
+}
+/*
+ *  if(queue->count==0)
+            return NULL;
+        ptr = queue->front;
+        data = ptr->data;
+        if(at_CAS(&queue->front,ptr,ptr->next))
+        {
+            free(ptr);
+            queue->count--;
+            return data;
+        }
+ */
+/*
+ *   atomic_NODE *first = queue->front;
+        atomic_NODE *next = first->next;
+        atomic_NODE *last = queue->rear;
+        atomic_NODE *lastnext = last->next;
+        if (first != queue->front)
+            continue;
+        if (last == first) {
+            if (lastnext == NULL) {
+                return NULL;
             }
             else
             {
-                CAS(&queue->rear,last,lastnext);
+                at_CAS(&queue->rear, last, lastnext);
                 continue;
             }
         }
-        if(next == NULL)
-        {
+        if (NULL == next)
             continue;
-        }
         data = next->data;
-         if(false == CAS(&queue->front,ptr,next))
-        {
+        if (false == at_CAS(&queue->front, first, next))
             continue;
-        }
-        ptr->next = NULL;
-        free(ptr);
-        queue->count--;
+//        first->next = NULL;
+        free(first);
         return data;
+ */
+void* at_dequeue(atomic_QUEUE *queue)
+{
+    void* data;
+
+    while (1)
+    {
+        atomic_NODE *ptr;
+        if(queue->count==0)
+            return NULL;
+        ptr = queue->front;
+        data = ptr->data;
+        if(at_CAS(&queue->front,ptr,ptr->next))
+        {
+            free(ptr);
+            queue->count--;
+            return data;
+        }
     }
 }
-bool CAS(NODE *addr,NODE *old_node, NODE *new_node)
+bool at_CAS(atomic_NODE *addr,atomic_NODE *old_node, atomic_NODE *new_node)
 {
-    return atomic_compare_exchange_strong((volatile atomic_int *)addr,(int*)(&old_node),(int)new_node);
+    return atomic_compare_exchange_strong((volatile atomic_int *)addr,(int*)(&old_node),new_node);
 }

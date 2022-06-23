@@ -5,6 +5,7 @@
 #include <stdatomic.h>
 #include <stdbool.h>
 #include <stdlib.h>
+#include <stdio.h>
 
 typedef struct NODE
 {
@@ -14,8 +15,8 @@ typedef struct NODE
 
 typedef struct QUEUE
 {
-    struct NODE * volatile front;
-    struct NODE * volatile rear;
+    struct NODE *front;
+    struct NODE *rear;
     int count;
 }QUEUE;
 

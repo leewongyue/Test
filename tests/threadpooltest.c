@@ -3,10 +3,10 @@
 
 int test_func(int a,char* arr,int num)
 {
-    printf("[JOBQUEUE FUNCTION] : Data Index : {%d} Data : {%s} THREADNUM : %d\n",a,arr,num);
+    //printf("[JOBQUEUE FUNCTION] : Data Index : {%d} Data : {%s} THREADNUM : %d\n",a,arr,num);
     a+num;
 }
-int main()
+int main__()
 {
     jobqueue = jq_init_queue(jobqueue);
 
@@ -55,25 +55,25 @@ int main()
             if(jobqueue->count != 0)
             {
                 pthread_mutex_lock(&mutex_async);
-                sort_active_threads(thread_info);
+                sort_thread_info(thread_info);
                 pthread_cond_signal(&cond[0]);
                 thread_info[0].thread_state = true;
                 pthread_mutex_unlock(&mutex_async);
             }
             else
             {
-              //sleep(5);
-              //for(int i=0;i<2000000;i++)
-              //{
-              //    JOB *job = malloc(sizeof(JOB));
-              //    JOBARGUMENT *arg = malloc(sizeof(JOBARGUMENT));
-              //    arg->arg1 = i;
-              //    arg->arg2 = "asdf\0";
-              //    job->func = test_func;
-              //    job->argument = arg;
-              //    jq_enqueue(jobqueue,job);
-              //}
-              //printf("[ENQUEUE]\n");
+              sleep(5);
+              for(int i=0;i<2000000;i++)
+              {
+                  JOB *job = malloc(sizeof(JOB));
+                  JOBARGUMENT *arg = malloc(sizeof(JOBARGUMENT));
+                  arg->arg1 = i;
+                  arg->arg2 = "asdf\0";
+                  job->func = test_func;
+                  job->argument = arg;
+                  jq_enqueue(jobqueue,job);
+              }
+              printf("[ENQUEUE]\n");
 
               continue;
             }

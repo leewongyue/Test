@@ -1,7 +1,7 @@
 
 #include "../datastructure/hashtable.h"
 
-int main__()
+int main_________()
 {
   HASHTABLE *table = init_hashtable(table);
   for(int i=0;i<1000000;i++)

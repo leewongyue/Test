@@ -4,7 +4,6 @@
 
 #endif
 #include <stdlib.h>
-
 typedef struct BUFFER
 {
     char* buffer;
@@ -17,3 +16,6 @@ char* slice_buffer(char* bytes,int startindex,int endindex);
 int trywritebytes(char* source,char* dest,int destoffset);
 void cpy_buffer(char* source,int s_start,int s_end,char* dest,int d_start);
 int buffer_cmp(char* s1,char* s2);
+int buffer_len(char* buffer);
+void clean_buff(char *src,int s_startindex,int s_endindex,char*dest,d_offset);
+char* cpy_buff(char* src,char *dest);
